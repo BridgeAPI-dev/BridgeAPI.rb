@@ -6,12 +6,16 @@ class UsersController < ApplicationController
   before_action :encrypt_password, only:[:create, :update]
 
   def show 
-    render json: @user
+    # if current_user
+      render json: @user
+      # else 
+      # login_page 
   end
 
   def create 
     @user = User.new(user_params)
-    if @user.save!  
+    if @user.save! 
+      session[:id] = @user.id 
       render json: @user, status: :created
     else 
       render json: @user.errors, status: :unprocessable_entity
@@ -19,10 +23,12 @@ class UsersController < ApplicationController
   end
 
   def destroy 
+    #current_user.destroy
     @user.destroy
   end
 
   def update 
+    # current_user.update(user_params)
     if @user.update(user_params)
       render json: @user
     else 
