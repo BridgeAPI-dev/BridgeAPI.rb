@@ -1,22 +1,32 @@
+require 'bcrypt'
+
 class SessionsController < ApplicationController
-  def create  
-    user = User.find_by_email(params[:email])
-    if user && user.password == params[:password]
-      session[:user_id] = user.id 
-      render json: @user, status: :logged_in
+  include BCrypt 
+  before_action :set_user, only:[:create]
+
+  def create 
+    @password = BCrypt::Password.new(@user.password_hash)
+    guess = session_params[:password]
+    
+    if @user && @password == guess
+      session[:id] = @user.id 
+      render json: @user
     else 
-      render json: 'hi'
+      render json: @user.errors, status: :unprocessable_entity
     end 
   end
 
-  def destroy   
-    # Delete session
-    # return a confirmation 
+  def clear
+    reset_session
   end
 
   private 
 
-  def user_params 
+  def set_user 
+    @user = User.find_by_email(session_params[:email])
+  end
+
+  def session_params 
     params.require(:user).permit(:email, :password)
   end
 end

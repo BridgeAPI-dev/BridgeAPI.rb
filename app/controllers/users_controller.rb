@@ -2,8 +2,12 @@ require 'bcrypt'
 
 class UsersController < ApplicationController
   include BCrypt
-  before_action :set_user, only:[:destroy, :update]
-  before_action :encrypt_password, only:[:create]
+  before_action :set_user, only:[:show, :destroy, :update]
+  before_action :encrypt_password, only:[:create, :update]
+
+  def show 
+    render json: @user
+  end
 
   def create 
     @user = User.new(user_params)
