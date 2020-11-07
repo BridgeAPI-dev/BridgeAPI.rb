@@ -5,7 +5,8 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id 
       render json: @user, status: :logged_in
     else 
-      render json: 
+      render json: 'hi'
+    end 
   end
 
   def destroy   

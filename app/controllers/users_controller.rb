@@ -1,46 +1,42 @@
-# require 'bcrypt'
-# require 'pry'
+require 'bcrypt'
 
 class UsersController < ApplicationController
-  # has_secure_password 
-  
+  include BCrypt
+  before_action :set_user, only:[:destroy, :update]
+  before_action :encrypt_password, only:[:create]
+
   def create 
-    email = params[:email]
-    password = params[:password]
-    # password_hash = BCrypt::Password.create(password)
-    
-    new_user = User.new(user_params)
-    if new_user.save  
+    @user = User.new(user_params)
+    if @user.save!  
       render json: @user, status: :created
     else 
       render json: @user.errors, status: :unprocessable_entity
     end
-    # puts password_hash 
-    # binding.pry 
-    # we need a password from the params (params[:password])
-    # we need a username from the params (params[:email]) 
-    # Need to make those strong parameters! 
-    
-    # then we hash the password with bcrypt 
-    # then we instantiate the User 
-    # => if that works, then we call save! on the user and return a successful object? (research this)
-  # If that doesn't work, return a negative object (research this)  
   end
 
   def destroy 
-    # Validate the user 
-    # Then delete user from the database  
+    @user.destroy
   end
 
   def update 
-    # Validate the user 
-    # hash the password
-    # The set username and password to the user and save to database
+    if @user.update(user_params)
+      render json: @user
+    else 
+      render json: @user.errors, status: :unprocessable_entity
+    end
   end
 
   private 
 
+  def encrypt_password 
+    params[:user][:password_hash] = BCrypt::Password.create(params[:user][:password])
+  end
+
   def user_params 
-    params.require(:user).permit(:email, :password)
+    params.require(:user).permit(:email, :password_hash)
+  end
+
+  def set_user 
+    @user = User.find_by_id(params[:id])
   end
 end
