@@ -1,9 +1,9 @@
-require 'bcrypt'
+# require 'bcrypt'
 
 class UsersController < ApplicationController
-  include BCrypt
+  # include BCrypt
   before_action :set_user, only:[:show, :destroy, :update]
-  before_action :encrypt_password, only:[:create, :update]
+  # before_action :hash_password, only:[:create, :update]
 
   def show 
     # if current_user
@@ -16,34 +16,35 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save! 
       session[:id] = @user.id 
-      render json: @user, status: :created
+      render json: @user, status: 201 # Created
     else 
-      render json: @user.errors, status: :unprocessable_entity
+      render json: @user.errors, status: 422 # Unprocessable Entity
     end
   end
 
   def destroy 
     #current_user.destroy
     @user.destroy
+    render status: 204 # No Content 
   end
 
   def update 
     # current_user.update(user_params)
     if @user.update(user_params)
-      render json: @user
+      render json: @user, status: 204 # No Content 
     else 
-      render json: @user.errors, status: :unprocessable_entity
+      render json: @user.errors, status: 400 # Bad Request
     end
   end
 
   private 
 
-  def encrypt_password 
-    params[:user][:password_hash] = BCrypt::Password.create(params[:user][:password])
+  def hash_password 
+    params[:user][:password] = BCrypt::Password.create(params[:user][:password])
   end
 
   def user_params 
-    params.require(:user).permit(:email, :password_hash)
+    params.require(:user).permit(:email, :password)
   end
 
   def set_user 

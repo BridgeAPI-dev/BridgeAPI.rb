@@ -1,18 +1,18 @@
 require 'bcrypt'
 
 class SessionsController < ApplicationController
-  include BCrypt 
+  include BCrypt
   before_action :set_user, only:[:create]
 
   def create 
-    @password = BCrypt::Password.new(@user.password_hash)
+    @password = BCrypt::Password.new(@user.password)
     guess = session_params[:password]
     
     if @user && @password == guess
       session[:id] = @user.id 
       render json: @user
     else 
-      render json: @user.errors, status: :unprocessable_entity
+      render json: @user.errors, status: 403
     end 
   end
 

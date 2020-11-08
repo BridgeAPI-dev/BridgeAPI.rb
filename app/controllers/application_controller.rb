@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::API
+  
   def current_user
-    User.find_by(id: session[:id])
+    @current_user ||= User.find_by(id: session[:id])
   end
 end
