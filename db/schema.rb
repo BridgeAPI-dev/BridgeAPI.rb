@@ -22,11 +22,9 @@ ActiveRecord::Schema.define(version: 2020_11_07_233243) do
     t.string "method", null: false
     t.integer "retries", null: false
     t.integer "delay", null: false
-    t.bigint "user_id", null: false
     t.binary "payload", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["user_id"], name: "index_bridges_on_user_id"
   end
 
   create_table "env_vars", force: :cascade do |t|
@@ -39,11 +37,11 @@ ActiveRecord::Schema.define(version: 2020_11_07_233243) do
   end
 
   create_table "events", force: :cascade do |t|
-    t.boolean "completed"
-    t.binary "data"
-    t.string "inboundURL"
-    t.string "outboundURL"
-    t.integer "status_code"
+    t.boolean "completed", null: false
+    t.binary "data", null: false
+    t.string "inboundURL", null: false
+    t.string "outboundURL", null: false
+    t.integer "status_code", null: false
     t.datetime "completed_at"
     t.bigint "bridge_id", null: false
     t.datetime "created_at", precision: 6, null: false
@@ -67,5 +65,4 @@ ActiveRecord::Schema.define(version: 2020_11_07_233243) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "bridges", "users"
 end

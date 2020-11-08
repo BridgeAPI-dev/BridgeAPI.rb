@@ -1,2 +1,2 @@
-class EnvVarsController < ApplicationController 
+class EnvVarsController < ApplicationController
 end

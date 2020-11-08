@@ -7,7 +7,6 @@ class ImplementDatabase < ActiveRecord::Migration[6.0]
       t.string :method, null: false
       t.integer :retries, null: false
       t.integer :delay, null: false
-      t.references :user, foreign_key: true, null: false
       t.binary :payload, null: false
 
       t.timestamps
@@ -30,11 +29,11 @@ class ImplementDatabase < ActiveRecord::Migration[6.0]
     end
     
     create_table :events do |t|
-      t.boolean :completed
-      t.binary :data
-      t.string :inboundURL
-      t.string :outboundURL
-      t.integer :status_code
+      t.boolean :completed, null: false
+      t.binary :data, null: false
+      t.string :inboundURL, null: false
+      t.string :outboundURL, null: false
+      t.integer :status_code, null: false
       t.datetime :completed_at
       t.references :bridge, forgeign_key: true, null: false
 
