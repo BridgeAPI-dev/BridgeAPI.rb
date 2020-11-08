@@ -1,0 +1,3 @@
+class EnvVarsController < ApplicationController 
+  
+end
