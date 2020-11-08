@@ -1,2 +1,0 @@
-class EnvVarsController < ApplicationController
-end

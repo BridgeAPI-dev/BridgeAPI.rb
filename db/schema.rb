@@ -17,8 +17,8 @@ ActiveRecord::Schema.define(version: 2020_11_07_233243) do
 
   create_table "bridges", force: :cascade do |t|
     t.string "name", null: false
-    t.string "inboundURL", null: false
-    t.string "outboundURL", null: false
+    t.string "inbound_url", null: false
+    t.string "outbound_url", null: false
     t.string "method", null: false
     t.integer "retries", null: false
     t.integer "delay", null: false
@@ -27,20 +27,20 @@ ActiveRecord::Schema.define(version: 2020_11_07_233243) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "env_vars", force: :cascade do |t|
+  create_table "environment_variables", force: :cascade do |t|
     t.string "key", null: false
     t.string "value", null: false
     t.bigint "bridge_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["bridge_id"], name: "index_env_vars_on_bridge_id"
+    t.index ["bridge_id"], name: "index_environment_variables_on_bridge_id"
   end
 
   create_table "events", force: :cascade do |t|
     t.boolean "completed", null: false
     t.binary "data", null: false
-    t.string "inboundURL", null: false
-    t.string "outboundURL", null: false
+    t.string "inbound_url", null: false
+    t.string "outbound_url", null: false
     t.integer "status_code", null: false
     t.datetime "completed_at"
     t.bigint "bridge_id", null: false

@@ -2,8 +2,8 @@ class ImplementDatabase < ActiveRecord::Migration[6.0]
   def change
     create_table :bridges do |t|
       t.string :name, null: false
-      t.string :inboundURL, null: false
-      t.string :outboundURL, null: false
+      t.string :inbound_url, null: false
+      t.string :outbound_url, null: false
       t.string :method, null: false
       t.integer :retries, null: false
       t.integer :delay, null: false
@@ -12,7 +12,7 @@ class ImplementDatabase < ActiveRecord::Migration[6.0]
       t.timestamps
     end
 
-    create_table :env_vars do |t|
+    create_table :environment_variables do |t|
       t.string :key, null: false
       t.string :value, null: false
       t.references :bridge, forgeign_key: true, null: false
@@ -31,8 +31,8 @@ class ImplementDatabase < ActiveRecord::Migration[6.0]
     create_table :events do |t|
       t.boolean :completed, null: false
       t.binary :data, null: false
-      t.string :inboundURL, null: false
-      t.string :outboundURL, null: false
+      t.string :inbound_url, null: false
+      t.string :outbound_url, null: false
       t.integer :status_code, null: false
       t.datetime :completed_at
       t.references :bridge, forgeign_key: true, null: false
