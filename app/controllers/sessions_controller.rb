@@ -2,11 +2,11 @@ class SessionsController < ApplicationController
   before_action :set_user
 
   def create
-    if @user&.validate(user_params[:password])
+    if @user&.authenticate(user_params[:password])
       token = JsonWebToken.encode( {user_id: @user.id} )
       render json: {token: token}, status: 201 # Created
     else
-      render json: {message: "email or password was incorrect"}, status: 403 # Forbidden
+      render json: {error: "email or password was incorrect"}, status: 403 # Forbidden
     end
   end
 

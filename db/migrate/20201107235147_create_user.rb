@@ -4,6 +4,7 @@ class CreateUser < ActiveRecord::Migration[6.0]
       t.string :email, null: false, index: { unique: true }
       t.string :password_digest, null: false
       t.string :recovery_password_digest
+      t.boolean :notifications, null: false, default: false
 
       t.timestamps null: false
     end

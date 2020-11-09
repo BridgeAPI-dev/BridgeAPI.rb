@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2020_11_07_235147) do
     t.string "email", null: false
     t.string "password_digest", null: false
     t.string "recovery_password_digest"
+    t.boolean "notifications", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
