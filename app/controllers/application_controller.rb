@@ -5,11 +5,17 @@ class ApplicationController < ActionController::API
   def authorize_request 
     token = request.headers[TOKEN_HEADER]&.split(' ')&.last
     decoded_token = JsonWebToken.decode(token)
-    user = User.find(decoded_token['user_id'])
-    if user  
+    begin 
+      user = User.find(decoded_token['user_id'])
+    rescue ActiveRecord::RecordNotFound
+      render json: {}, status: 404 # Not Found
+    else 
       @current_user = user 
-    else
-      render json: {}, status: 403 # Forbidden
     end 
+
+    # if user  
+    #   @current_user = user 
+    # else    #   render json: {}, status: 403 # Forbidden
+    # end 
   end
 end
