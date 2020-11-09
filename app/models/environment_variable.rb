@@ -1,6 +1,6 @@
 class EnvironmentVariable < ApplicationRecord
-  validates :key, length: { minimum: 1 }
-  validates :value, length: { minimum: 1 }
+  validates :key, presence: true
+  validates :value, presence: true
   
   belongs_to :bridge
 end
