@@ -25,7 +25,7 @@ RSpec.describe "Bridges", type: :request do
     it 'show method' do
       subject.name = 'show method bridge'
       subject.save!
-      get bridge_path(bridge.id)
+      get bridge_path(subject.id)
       expect(response.body).to include 'show method bridge'
     end
   end
