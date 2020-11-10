@@ -10,9 +10,9 @@ class JsonWebToken
   end
 
   def self.decode(token)
-    decoded = JWT.decode(token, SECRET_KEY).first 
-    current = DateTime.now 
-    raise JWT::ExpiredWebToken if current > decoded['exp'] 
+    decoded = JWT.decode(token, SECRET_KEY).first
+    current = DateTime.now
+    raise JWT::ExpiredWebToken if current > decoded['exp']
 
     decoded
   end
