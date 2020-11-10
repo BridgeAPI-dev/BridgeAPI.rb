@@ -1,27 +1,29 @@
+# frozen_string_literal: true
+
 require 'securerandom'
 
-METHODS ||= [
-  'DELETE',
-  'GET',
-  'PATCH',
-  'POST',
-  'PUT',
-]
+METHODS ||= %w[
+  DELETE
+  GET
+  PATCH
+  POST
+  PUT
+].freeze
 
 DELAYS ||= [
   0,
   15,
   30,
   60,
-  1440,
-]
+  1440
+].freeze
 
 RETRIES ||= [
   0,
   1,
   3,
-  5,
-]
+  5
+].freeze
 
 class Bridge < ApplicationRecord
   validates :name, presence: true
@@ -30,7 +32,6 @@ class Bridge < ApplicationRecord
   validates :method, inclusion: METHODS
   validates :delay, inclusion: DELAYS
   validates :retries, inclusion: RETRIES
-
 
   has_many :environment_variables, dependent: :destroy
   has_many :headers, dependent: :destroy
