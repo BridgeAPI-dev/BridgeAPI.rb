@@ -1,6 +1,8 @@
+require 'securerandom'
+
 class Bridge < ApplicationRecord
   validates :name, presence: true
-  validates :inbound_url, presence: true
+  validates :inbound_url, presence: true, uniqueness: true
   validates :outbound_url, presence: true
   validates :method, length: { minimum: 3 }
   validates :delay, :numericality => { greater_than_or_equal_to: 0 }
@@ -12,4 +14,8 @@ class Bridge < ApplicationRecord
   has_many :events, dependent: :destroy
 
   alias_attribute :env_vars, :environment_variables
+
+  def self.generate_inbound_url
+    SecureRandom.hex(10)
+  end
 end

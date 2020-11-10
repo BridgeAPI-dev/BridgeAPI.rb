@@ -11,19 +11,19 @@ class BridgesController < ApplicationController
 
   def create
     @bridge = Bridge.new(bridge_params)
-    @bridge.inbound_url = generate_inbound_url
+    @bridge.inbound_url = Bridge.generate_inbound_url
     if @bridge.save
-      render json: {}
+      render_success_message
     else
-      render json: @bridge.errors, status: :internal_server_error
+      render_error_message
     end
   end
 
   def update
     if @bridge.update bridge_params
-      render json: {}
+      render_success_message
     else
-      render json: @bridge.errors, status: :internal_server_error
+      render_error_message
     end
   end
 
@@ -42,7 +42,7 @@ class BridgesController < ApplicationController
     render json: {}, status: :unprocessable_entity unless @bridge
   end
 
-  def generate_inbound_url
-    "https://bridgeapi.io/b12324/inbound"
+  def render_error_message
+    render json: @bridge.errors, status: :internal_server_error
   end
 end
