@@ -1,12 +1,35 @@
 require 'securerandom'
 
+METHODS = [
+  'DELETE',
+  'GET',
+  'PATCH',
+  'POST',
+  'PUT',
+]
+
+DELAYS = [
+  0,
+  15,
+  30,
+  60,
+  1440,
+]
+
+RETRIES = [
+  0,
+  1,
+  3,
+  5,
+]
+
 class Bridge < ApplicationRecord
   validates :name, presence: true
   validates :inbound_url, presence: true, uniqueness: true
   validates :outbound_url, presence: true
-  validates :method, length: { minimum: 3 }
-  validates :delay, :numericality => { greater_than_or_equal_to: 0 }
-  validates :retries, :numericality => { greater_than_or_equal_to: 0 }
+  validates :method, inclusion: METHODS
+  validates :delay, inclusion: DELAYS
+  validates :retries, inclusion: RETRIES
 
 
   has_many :environment_variables, dependent: :destroy
