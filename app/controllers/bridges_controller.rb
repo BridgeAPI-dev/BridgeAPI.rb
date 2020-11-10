@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 class BridgesController < ApplicationController
-  before_action :set_bridge, only: [:show, :update, :destroy]
-  
-  def index 
+  before_action :set_bridge, only: %i[show update destroy]
+
+  def index
     render json: Bridge.all
   end
 
   def show
-    render json: @bridge.to_json(include: [:headers, :environment_variables, :events])
+    render json: @bridge.to_json(include: %i[headers environment_variables events])
   end
 
   def create
@@ -33,6 +35,7 @@ class BridgesController < ApplicationController
   end
 
   protected
+
   def bridge_params
     params.require(:bridge).permit(:name, :method, :retries, :delay, :outbound_url, :payload)
   end
