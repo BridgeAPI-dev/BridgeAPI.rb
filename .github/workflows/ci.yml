@@ -2,7 +2,7 @@ env:
   RUBY_VERSION: 2.6
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: "" 
-  POSTGRES_DB: postgres
+  POSTGRES_DB: bridgeapi_rb_test
 
 name: Build
 
@@ -32,9 +32,15 @@ jobs:
     runs-on: ubuntu-18.04
     services:
       postgres:
-        image: postgres:latest
+        image: postgres:10.8
+        env:
+          POSTGRES_USER: ${{ env.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ env.POSTGRES_DB }}
         ports:
         - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-ruby@v1
