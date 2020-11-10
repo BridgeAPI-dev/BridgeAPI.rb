@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 class BridgesController < ApplicationController
+  before_action :authorize_request
   before_action :set_bridge, only: %i[show update destroy]
 
   def index
-    render json: Bridge.all
+    render json: @current_user.bridges.all
   end
 
   def show
@@ -17,7 +18,7 @@ class BridgesController < ApplicationController
     if @bridge.save
       render_success_message(:created)
     else
-      render_error_message
+      render_error_message(@bridge.errors)
     end
   end
 
@@ -25,7 +26,7 @@ class BridgesController < ApplicationController
     if @bridge.update bridge_params
       render_success_message
     else
-      render_error_message
+      render_error_message(@bridge.errors)
     end
   end
 
@@ -40,12 +41,8 @@ class BridgesController < ApplicationController
     params.require(:bridge).permit(:name, :method, :retries, :delay, :outbound_url, :payload)
   end
 
-  def render_error_message
-    render json: @bridge.errors, status: :internal_server_error
-  end
-
   def set_bridge
-    @bridge = Bridge.includes(:events, :headers, :environment_variables).find_by_id(params[:id])
+    @bridge = Bridge.includes(:events, :headers, :environment_variables).find_by(id: params[:id], user: @current_user)
     render json: {}, status: :unprocessable_entity unless @bridge
   end
 end

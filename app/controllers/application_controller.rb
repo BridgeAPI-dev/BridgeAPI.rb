@@ -31,4 +31,8 @@ class ApplicationController < ActionController::API
   def render_success_message(status = :ok)
     render json: {}, status: status
   end
+
+  def render_error_message(messages)
+    render json: messages, status: :internal_server_error
+  end
 end

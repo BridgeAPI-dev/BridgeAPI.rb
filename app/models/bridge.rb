@@ -33,6 +33,8 @@ class Bridge < ApplicationRecord
   validates :delay, inclusion: DELAYS
   validates :retries, inclusion: RETRIES
 
+  belongs_to :user
+
   has_many :environment_variables, dependent: :destroy
   has_many :headers, dependent: :destroy
   has_many :events, dependent: :destroy

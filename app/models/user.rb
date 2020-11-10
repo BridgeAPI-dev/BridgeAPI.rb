@@ -7,6 +7,8 @@ class User < ApplicationRecord
                     format: { with: URI::MailTo::EMAIL_REGEXP }
   validates :notifications, inclusion: { in: [true, false] }
 
+  has_many :bridges
+
   def safe_json
     { email: email, notifications: notifications }
   end
