@@ -29,7 +29,7 @@ class BridgesController < ApplicationController
 
   def destroy
     @bridge.destroy
-    render json: {}, status: :deleted
+    render_success_message
   end
 
   protected
