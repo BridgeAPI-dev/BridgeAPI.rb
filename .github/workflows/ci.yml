@@ -1,6 +1,6 @@
 env:
   RUBY_VERSION: 2.6
-  POSTGRES_USER: postgres
+  POSTGRES_USER: ruby
   POSTGRES_PASSWORD: ruby
   POSTGRES_DB: bridgeapi_rb_test
 
