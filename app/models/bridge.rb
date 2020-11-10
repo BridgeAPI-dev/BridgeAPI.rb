@@ -1,6 +1,6 @@
 require 'securerandom'
 
-METHODS = [
+METHODS ||= [
   'DELETE',
   'GET',
   'PATCH',
@@ -8,7 +8,7 @@ METHODS = [
   'PUT',
 ]
 
-DELAYS = [
+DELAYS ||= [
   0,
   15,
   30,
@@ -16,7 +16,7 @@ DELAYS = [
   1440,
 ]
 
-RETRIES = [
+RETRIES ||= [
   0,
   1,
   3,
