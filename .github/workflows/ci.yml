@@ -29,7 +29,6 @@ jobs:
 
   rspec-test:
     name: Test
-    needs: rubocop-test
     runs-on: ubuntu-18.04
     services:
       postgres:
