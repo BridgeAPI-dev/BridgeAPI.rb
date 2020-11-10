@@ -13,7 +13,7 @@ class BridgesController < ApplicationController
     @bridge = Bridge.new(bridge_params)
     @bridge.inbound_url = Bridge.generate_inbound_url
     if @bridge.save
-      render_success_message
+      render_success_message(:created)
     else
       render_error_message
     end
@@ -39,5 +39,10 @@ class BridgesController < ApplicationController
 
   def render_error_message
     render json: @bridge.errors, status: :internal_server_error
+  end
+
+  def set_bridge
+    @bridge = Bridge.includes(:events, :headers, :environment_variables).find_by_id(params[:id])
+    render json: {}, status: :unprocessable_entity unless @bridge
   end
 end
