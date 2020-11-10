@@ -20,7 +20,7 @@ RSpec.describe EnvironmentVariable, type: :model do
     environment_variable2 = EnvironmentVariable.create(key: 'database_password', value: 'supersecretpasswordwow')
     subject.env_vars << environment_variable1
     subject.env_vars << environment_variable2
-    expect(EnvironmentVariable1.bridge).to eq subject
-    expect(EnvironmentVariable2.bridge).to eq subject
+    expect(environment_variable1.bridge).to eq subject
+    expect(environment_variable2.bridge).to eq subject
   end
 end
