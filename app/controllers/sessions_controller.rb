@@ -8,9 +8,7 @@ class SessionsController < ApplicationController
     else
       render json: {error: "email or password was incorrect"}, status: 403 # Forbidden
     end
-    
-    rescue JWT::EncodeError 
-    
+  rescue JWT::EncodeError 
     render json: {}, status: 422 # Unprocessable Entity 
   end
 
