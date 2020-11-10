@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Event, type: :model do
@@ -8,7 +10,7 @@ RSpec.describe Event, type: :model do
     event2 = Event.create(completed: false, outbound_url: bridge.outbound_url, inbound_url: bridge.inbound_url, data: '', status_code: 300)
     bridge.events << event1
     bridge.events << event2
-    expect(event1.bridge).to eq bridge 
-    expect(event2.bridge).to eq bridge 
+    expect(event1.bridge).to eq bridge
+    expect(event2.bridge).to eq bridge
   end
 end

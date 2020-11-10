@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Header, type: :model do
@@ -8,7 +10,7 @@ RSpec.describe Header, type: :model do
     header2 = Header.create(key: 'Authentication', value: 'Bearer 1oij2oubviu3498', bridge: bridge)
     bridge.headers << header1
     bridge.headers << header2
-    expect(header1.bridge).to eq bridge 
-    expect(header2.bridge).to eq bridge 
+    expect(header1.bridge).to eq bridge
+    expect(header2.bridge).to eq bridge
   end
 end

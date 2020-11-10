@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe EnvironmentVariable, type: :model do
@@ -8,7 +10,7 @@ RSpec.describe EnvironmentVariable, type: :model do
     EnvironmentVariable2 = EnvironmentVariable.create(key: 'database_password', value: 'supersecretpasswordwow')
     bridge.env_vars << EnvironmentVariable1
     bridge.env_vars << EnvironmentVariable2
-    expect(EnvironmentVariable1.bridge).to eq bridge 
-    expect(EnvironmentVariable2.bridge).to eq bridge 
+    expect(EnvironmentVariable1.bridge).to eq bridge
+    expect(EnvironmentVariable2.bridge).to eq bridge
   end
 end
