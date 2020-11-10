@@ -37,11 +37,6 @@ class BridgesController < ApplicationController
     params.require(:bridge).permit(:name, :method, :retries, :delay, :outbound_url, :payload)
   end
 
-  def set_bridge
-    @bridge = Bridge.includes(:headers, :environment_variables, :events).find_by_id(params[:id])
-    render json: {}, status: :unprocessable_entity unless @bridge
-  end
-
   def render_error_message
     render json: @bridge.errors, status: :internal_server_error
   end
