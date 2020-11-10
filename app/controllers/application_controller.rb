@@ -4,7 +4,6 @@ class ApplicationController < ActionController::API
   USER_ERROR_MSG = 'ERROR: Could not find user with decoded JWT. This should not happen.'
 
   def authorize_request 
-    binding.pry 
     token = request.headers[TOKEN_HEADER]&.split(' ')&.last
     decoded_token = JsonWebToken.decode(token)
     user = User.find(decoded_token['user_id'])
