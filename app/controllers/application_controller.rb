@@ -3,7 +3,7 @@
 class ApplicationController < ActionController::API
   attr_accessor :current_user
 
-  TOKEN_HEADER = 'BRIDGE-JWT'
+  TOKEN_HEADER = 'HTTP_BRIDGE_JWT'
   USER_ERROR_MSG = 'ERROR: Could not find user with decoded JWT. This should not happen.'
 
   # Set this method as a before_action for routes you want

@@ -3,8 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe Header, type: :model do
+  before do
+    @current_user = User.new(email: 'admin@bridge.io', password: 'password', notifications: false)
+  end
+
   subject do
     Bridge.create(
+      user: @current_user,
       name: 'bridge',
       payload: '',
       inbound_url: Bridge.generate_inbound_url,
@@ -15,20 +20,20 @@ RSpec.describe Header, type: :model do
     )
   end
 
-  # it 'belongs to bridge' do
-  #   header1 = Header.create(
-  #     key: 'X_API_KEY',
-  #     value: 'ooosecrets',
-  #     bridge: subject
-  #   )
-  #   header2 = Header.create(
-  #     key: 'Authentication',
-  #     value: 'Bearer 1oij2oubviu3498',
-  #     bridge: subject
-  #   )
-  #   subject.headers << header1
-  #   subject.headers << header2
-  #   expect(header1.bridge).to eq subject
-  #   expect(header2.bridge).to eq subject
-  # end
+  it 'belongs to bridge' do
+    header1 = Header.create(
+      key: 'X_API_KEY',
+      value: 'ooosecrets',
+      bridge: subject
+    )
+    header2 = Header.create(
+      key: 'Authentication',
+      value: 'Bearer 1oij2oubviu3498',
+      bridge: subject
+    )
+    subject.headers << header1
+    subject.headers << header2
+    expect(header1.bridge).to eq subject
+    expect(header2.bridge).to eq subject
+  end
 end

@@ -3,8 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe Event, type: :model do
+  before do
+    @current_user = User.new(email: 'admin@bridge.io', password: 'password', notifications: false)
+  end
+
   subject do
     Bridge.create(
+      user: @current_user,
       name: 'bridge',
       payload: '',
       inbound_url: Bridge.generate_inbound_url,
