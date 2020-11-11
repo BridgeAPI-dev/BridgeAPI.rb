@@ -40,7 +40,7 @@ RSpec.describe 'Users', type: :request do
     post '/users', params: { user: { email: 'someone@somewhere.com', password: 'notsecret' } }
     body = parse_response(response)
 
-    expect(response.content_type) == 'application/json; charset=utf-8'
+    expect(response.content_type).to eql('application/json; charset=utf-8')
     expect(response).to have_http_status 201
     expect(body['token']).to be_truthy
     expect(body['user']).to include('email')
@@ -50,7 +50,7 @@ RSpec.describe 'Users', type: :request do
     post '/users', params: { user: { email: 'bademail', password: 'notsecret' } }
     body = parse_response(response)
 
-    expect(body['error']) == 'email or password is invalid'
+    expect(body['error']).to eql('email or password is invalid')
     expect(response).to have_http_status 422
   end
 
@@ -58,7 +58,7 @@ RSpec.describe 'Users', type: :request do
     post '/users', params: { user: { email: 'somemail@mail.com', password: '' } }
     body = parse_response(response)
 
-    expect(body['error']) == 'email or password is invalid'
+    expect(body['error']).to eql('email or password is invalid')
     expect(response).to have_http_status 422
   end
 
@@ -66,7 +66,7 @@ RSpec.describe 'Users', type: :request do
     post '/users', params: { user: { email: 'somemail@mail.com', password: '' } }
     body = parse_response(response)
 
-    expect(body['error']) == 'email or password is invalid'
+    expect(body['error']).to eql('email or password is invalid')
     expect(response).to have_http_status 422
   end
 
@@ -88,7 +88,7 @@ RSpec.describe 'Users', type: :request do
     body = parse_response(response)
 
     expect(response).to have_http_status 200
-    expect(body['email']) == 'newandimproved@mail.com'
+    expect(body['email']).to eql('newandimproved@mail.com')
   end
 
   it 'update action returns updated user and 200 status if valid password update' do
