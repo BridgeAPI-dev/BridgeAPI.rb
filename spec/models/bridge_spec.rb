@@ -1,22 +1,25 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require './spec/support/users_helper'
+require './spec/support/bridges_helper'
+
+RSpec.configure do |c|
+  c.include UsersHelper
+  c.include BridgesHelper
+end
 
 RSpec.describe Bridge, type: :model do
   before do
-    @current_user = User.new(email: 'admin@bridge.io', password: 'password', notifications: false)
+    create_user
+  end
+
+  after do 
+    @current_user.destroy
   end
 
   subject do
-    Bridge.create(
-      user: @current_user,
-      name: 'bridge',
-      payload: '',
-      outbound_url: "doggoapi.io/#{Bridge.generate_inbound_url}",
-      method: 'POST',
-      retries: 5,
-      delay: 15
-    )
+    create_bridge
   end
 
   it 'has many env vars' do
@@ -28,7 +31,6 @@ RSpec.describe Bridge, type: :model do
       key: 'database_password',
       value: 'supersecretpasswordwow'
     )
-
     expect(subject.env_vars.count).to eq 2
   end
 
@@ -41,7 +43,6 @@ RSpec.describe Bridge, type: :model do
       key: 'Authentication',
       value: 'Bearer 1oij2oubviu3498'
     )
-
     expect(subject.headers.count).to eq 2
   end
 

@@ -28,11 +28,7 @@ class ApplicationController < ActionController::API
     render json: { error: 'You need to log in again' }, status: 401 # unauthorized
   end
 
-  def render_success_message(status = :ok)
-    render json: {}, status: status
-  end
-
-  def render_error_message(messages)
-    render json: messages, status: :internal_server_error
+  def render_message(message: {}, status: :ok)
+    render json: message, status: status
   end
 end

@@ -5,11 +5,11 @@ class BridgesController < ApplicationController
   before_action :set_bridge, only: %i[show update destroy]
 
   def index
-    render json: @current_user.bridges.all
+    render_message message: @current_user.bridges.all
   end
 
   def show
-    render json: @bridge.to_json(include: %i[headers environment_variables events])
+    render_message message: @bridge.to_json(include: %i[headers environment_variables events])
   end
 
   def create
@@ -17,23 +17,23 @@ class BridgesController < ApplicationController
     @bridge.user = @current_user
 
     if @bridge.save
-      render_success_message(:created)
+      render_message status: :created
     else
-      render_error_message(@bridge.errors)
+      render_message message: @bridge.errors, status: :internal_server_error
     end
   end
 
   def update
     if @bridge.update bridge_params
-      render_success_message
+      render_message
     else
-      render_error_message(@bridge.errors)
+      render_message message: @bridge.errors, status: :internal_server_error
     end
   end
 
   def destroy
     @bridge.destroy
-    render_success_message
+    render_message
   end
 
   protected
@@ -44,6 +44,7 @@ class BridgesController < ApplicationController
 
   def set_bridge
     @bridge = Bridge.includes(:events, :headers, :environment_variables).find_by(id: params[:id], user: @current_user)
-    render json: {}, status: :unprocessable_entity unless @bridge
+    render_message status: :unprocessable_entity unless @bridge
+  end
   end
 end

@@ -1,18 +1,15 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
+require './spec/support/bridges_helper'
+
+RSpec.configure do |c|
+  c.include BridgesHelper
+end
 
 RSpec.describe EnvironmentVariable, type: :model do
   subject do
-    Bridge.create(
-      name: 'bridge',
-      payload: '',
-      inbound_url: Bridge.generate_inbound_url,
-      outbound_url: "doggoapi.io/#{Bridge.generate_inbound_url}",
-      method: 'POST',
-      retries: 5,
-      delay: 15
-    )
+    create_bridge
   end
 
   it 'belongs to bridge' do

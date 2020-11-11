@@ -2,9 +2,11 @@
 
 require 'rails_helper'
 require './spec/support/users_helper'
+require './spec/support/bridges_helper'
 
 RSpec.configure do |c|
   c.include UsersHelper
+  c.include BridgesHelper
 end
 
 RSpec.describe 'Bridges', type: :request do
@@ -12,16 +14,12 @@ RSpec.describe 'Bridges', type: :request do
     create_user
   end
 
+  after do 
+    @current_user.destroy
+  end
+
   subject do
-    Bridge.create(
-      user: @current_user,
-      name: 'bridge',
-      payload: '',
-      outbound_url: "doggoapi.io/#{Bridge.generate_inbound_url}",
-      method: 'POST',
-      retries: 5,
-      delay: 15
-    )
+    create_bridge
   end
 
   describe 'handles all requests properly:' do
@@ -30,7 +28,7 @@ RSpec.describe 'Bridges', type: :request do
       subject.save!
       get bridges_path, headers: authenticated_token
       expect(response).to be_successful
-      expect(response.body).to include('index method bridge')
+      expect(response.body).to include subject.name
     end
 
     it 'show method' do
