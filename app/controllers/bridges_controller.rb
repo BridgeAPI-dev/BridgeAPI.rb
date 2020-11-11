@@ -46,5 +46,4 @@ class BridgesController < ApplicationController
     @bridge = Bridge.includes(:events, :headers, :environment_variables).find_by(id: params[:id], user: @current_user)
     render_message status: :unprocessable_entity unless @bridge
   end
-  end
 end
