@@ -14,7 +14,7 @@ RSpec.describe Bridge, type: :model do
     create_user
   end
 
-  after do 
+  after do
     @current_user.destroy
   end
 
