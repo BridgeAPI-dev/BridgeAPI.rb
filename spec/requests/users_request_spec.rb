@@ -46,7 +46,9 @@ RSpec.describe 'Users', type: :request do
     expect(body['user']).to include('email')
   end
 
-  it 'create action returns 422 status and error message ("email or password is invalid") with invalid email at creation' do
+  it 'create action returns 422 status
+  and error message ("email or password is invalid")
+  with invalid email at creation' do
     post '/users', params: { user: { email: 'bademail', password: 'notsecret' } }
     body = parse_response(response)
 
@@ -54,7 +56,9 @@ RSpec.describe 'Users', type: :request do
     expect(response).to have_http_status 422
   end
 
-  it 'create action returns 422 status and error message ("email or password is invalid") with invalid password at creation' do
+  it 'create action returns 422 status
+  and error message ("email or password is invalid")
+  with invalid password at creation' do
     post '/users', params: { user: { email: 'somemail@mail.com', password: '' } }
     body = parse_response(response)
 
@@ -62,7 +66,9 @@ RSpec.describe 'Users', type: :request do
     expect(response).to have_http_status 422
   end
 
-  it 'create action returns 422 status and error message ("email or password is invalid") with invalid password at creation' do
+  it 'create action returns 422 status
+  and error message ("email or password is invalid")
+  with invalid password at creation' do
     post '/users', params: { user: { email: 'somemail@mail.com', password: '' } }
     body = parse_response(response)
 
@@ -94,7 +100,6 @@ RSpec.describe 'Users', type: :request do
   it 'update action returns updated user and 200 status if valid password update' do
     params = { user: { password: 'extrasuperdupersecure' } }
     put '/users', params: params, headers: authenticated_token
-    body = parse_response(response)
 
     expect(response).to have_http_status 200
   end
