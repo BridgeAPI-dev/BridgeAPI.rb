@@ -14,7 +14,8 @@ class BridgesController < ApplicationController
 
   def create
     @bridge = Bridge.new(bridge_params)
-    @bridge.inbound_url = Bridge.generate_inbound_url
+    @bridge.user = @current_user
+
     if @bridge.save
       render_success_message(:created)
     else

@@ -8,8 +8,6 @@ class User < ApplicationRecord
   validates :notifications, inclusion: { in: [true, false] }
   has_many :bridges, dependent: :destroy
 
-  has_many :bridges
-
   def safe_json
     { email: email, notifications: notifications }
   end

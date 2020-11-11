@@ -12,7 +12,6 @@ RSpec.describe Bridge, type: :model do
       user: @current_user,
       name: 'bridge',
       payload: '',
-      inbound_url: Bridge.generate_inbound_url,
       outbound_url: "doggoapi.io/#{Bridge.generate_inbound_url}",
       method: 'POST',
       retries: 5,

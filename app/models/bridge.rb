@@ -33,8 +33,9 @@ class Bridge < ApplicationRecord
   validates :delay, inclusion: DELAYS
   validates :retries, inclusion: RETRIES
 
-  belongs_to :user
+  before_validation :set_inbound_url, only: :inbound_url
 
+  belongs_to :user
   has_many :environment_variables, dependent: :destroy
   has_many :headers, dependent: :destroy
   has_many :events, dependent: :destroy
@@ -44,5 +45,9 @@ class Bridge < ApplicationRecord
 
   def self.generate_inbound_url
     SecureRandom.hex(10)
+  end
+
+  def set_inbound_url
+    self.inbound_url = Bridge.generate_inbound_url
   end
 end
