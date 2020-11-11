@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require './spec/support/bridges_helper'
+require './spec/support/main_helper'
 
 RSpec.configure do |c|
-  c.include BridgesHelper
+  c.include MainHelper
 end
 
 RSpec.describe EnvironmentVariable, type: :model do
