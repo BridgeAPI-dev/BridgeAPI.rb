@@ -38,6 +38,7 @@ class Bridge < ApplicationRecord
   has_many :environment_variables, dependent: :destroy
   has_many :headers, dependent: :destroy
   has_many :events, dependent: :destroy
+  belongs_to :user
 
   alias_attribute :env_vars, :environment_variables
 
