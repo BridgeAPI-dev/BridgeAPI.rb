@@ -3,7 +3,6 @@
 class BridgesController < ApplicationController
   before_action :authorize_request
   before_action :set_bridge, only: %i[show update destroy]
-  before_action :new_bridge, only: :create
 
   def index
     render_message message: @current_user.bridges.all

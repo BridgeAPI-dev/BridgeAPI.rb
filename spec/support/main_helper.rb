@@ -14,8 +14,8 @@ module MainHelper
     @other_user = User.create(email: 'tester@bridge.io', password: 'password', notifications: false)
   end
 
-  def create_bridge
-    Bridge.new(
+  def bridge_hash
+    {
       user: @current_user,
       name: 'bridge',
       payload: '',
@@ -24,6 +24,12 @@ module MainHelper
       retries: 5,
       delay: 15,
       data: '{}'
+    }
+  end
+
+  def create_bridge
+    Bridge.new(
+      **bridge_hash
     )
   end
 end

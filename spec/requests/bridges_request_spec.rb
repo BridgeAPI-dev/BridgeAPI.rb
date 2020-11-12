@@ -84,6 +84,61 @@ RSpec.describe 'Bridges', type: :request do
       expect(response).to_not be_successful
     end
 
+    it 'creates bridges' do
+      post bridges_path, params: { bridge: bridge_hash }, headers: authenticated_token
+
+      expect(response).to be_successful
+    end
+
+    it 'doesnt create bridge without name' do
+      invalid_hash = bridge_hash
+      invalid_hash[:name] = nil
+
+      post bridges_path, params: { bridge: invalid_hash }
+
+      expect(response).to_not be_successful
+    end
+    it 'doesnt create bridge without outbound_url' do
+      invalid_hash = bridge_hash
+      invalid_hash[:outbound_url] = nil
+
+      post bridges_path, params: { bridge: invalid_hash }
+
+      expect(response).to_not be_successful
+    end
+    it 'doesnt create bridge without data' do
+      invalid_hash = bridge_hash
+      invalid_hash[:data] = nil
+
+      post bridges_path, params: { bridge: invalid_hash }
+
+      expect(response).to_not be_successful
+    end
+    it 'doesnt create bridge without method' do
+      invalid_hash = bridge_hash
+      invalid_hash[:method] = nil
+
+      post bridges_path, params: { bridge: invalid_hash }
+
+      expect(response).to_not be_successful
+    end
+    it 'doesnt create bridge without delay' do
+      invalid_hash = bridge_hash
+      invalid_hash[:delay] = nil
+
+      post bridges_path, params: { bridge: invalid_hash }
+
+      expect(response).to_not be_successful
+    end
+    it 'doesnt create bridge without retries' do
+      invalid_hash = bridge_hash
+      invalid_hash[:retries] = nil
+
+      post bridges_path, params: { bridge: invalid_hash }
+
+      expect(response).to_not be_successful
+    end
+    
     it 'updates bridges' do
       subject.save!
 
