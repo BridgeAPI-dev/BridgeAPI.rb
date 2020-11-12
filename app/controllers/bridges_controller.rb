@@ -40,7 +40,17 @@ class BridgesController < ApplicationController
   protected
 
   def bridge_params
-    params.require(:bridge).permit(:name, :method, :retries, :delay, :outbound_url, :payload, :data)
+    params.require(:bridge).permit(
+      :name,
+      :method,
+      :retries,
+      :delay,
+      :outbound_url,
+      :payload,
+      :data,
+      headers_attributes: %i[key value],
+      environment_variables_attributes: %i[key value]
+    )
   end
 
   def set_bridge

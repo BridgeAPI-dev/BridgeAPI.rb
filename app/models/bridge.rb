@@ -39,6 +39,7 @@ class Bridge < ApplicationRecord
   has_many :environment_variables, dependent: :destroy
   has_many :headers, dependent: :destroy
   has_many :events, dependent: :destroy
+  accepts_nested_attributes_for :headers, :environment_variables
 
   private
 
