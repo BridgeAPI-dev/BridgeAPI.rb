@@ -63,5 +63,45 @@ RSpec.describe 'Bridges', type: :request do
 
       @other_user.destroy!
     end
+
+    it 'destroys bridges' do 
+      subject.save! 
+
+      delete bridge_path(subject.id), headers: authenticated_token
+
+      expect(response).to be_successful
+    end
+
+    it 'doesnt destroy other\'s bridges' do 
+      create_other_user
+      other_bridge = create_bridge
+      other_bridge.name = 'other\s bridge'
+      other_bridge.user = @other_user
+      other_bridge.save!
+
+      delete bridge_path(other_bridge.id), headers: authenticated_token
+
+      expect(response).to_not be_successful
+    end
+
+    it 'updates bridges' do 
+      subject.save! 
+
+      patch bridge_path(subject.id), params: { bridge: { name: 'updated bridge '}}, headers: authenticated_token
+
+      expect(response).to be_successful
+    end
+
+    it 'doesnt update other\'s bridges' do 
+      create_other_user
+      other_bridge = create_bridge
+      other_bridge.name = 'other\s bridge'
+      other_bridge.user = @other_user
+      other_bridge.save!
+
+      patch bridge_path(other_bridge.id), params: { bridge: { name: 'updated bridge '}}, headers: authenticated_token
+
+      expect(response).to_not be_successful
+    end
   end
 end
