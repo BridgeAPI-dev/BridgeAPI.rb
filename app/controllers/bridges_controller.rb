@@ -17,7 +17,7 @@ class BridgesController < ApplicationController
     @bridge.user = @current_user
 
     if @bridge.save
-      render_message status: :created
+      render_message message: { id: @bridge.id }, status: :created
     else
       render_message message: @bridge.errors, status: :bad_request
     end

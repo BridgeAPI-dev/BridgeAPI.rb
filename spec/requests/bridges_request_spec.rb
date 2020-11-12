@@ -84,10 +84,28 @@ RSpec.describe 'Bridges', type: :request do
       expect(response).to_not be_successful
     end
 
-    it 'creates bridges' do
+    it 'creates bridges without headers or environment variables' do
       post bridges_path, params: { bridge: bridge_hash }, headers: authenticated_token
+      bridge = Bridge.find(JSON.parse(response.body)['id'])
 
       expect(response).to be_successful
+      expect(bridge).to be_truthy
+      expect(bridge.headers.count).to eq 0
+      expect(bridge.environment_variables.count).to be 0
+    end
+
+    it 'creates bridges with headers and environment variables' do
+      creation_hash = bridge_hash
+      creation_hash[:headers_attributes] = [{ key: 'my first key', value: 'my first value' }]
+      creation_hash[:environment_variables_attributes] = [{ key: 'my second key', value: 'my second value' }]
+
+      post bridges_path, params: { bridge: creation_hash }, headers: authenticated_token
+      bridge = Bridge.find(JSON.parse(response.body)['id'])
+
+      expect(response).to be_successful
+      expect(bridge).to be_truthy
+      expect(bridge.headers.count).to eq 1
+      expect(bridge.environment_variables.count).to be 1
     end
 
     it 'doesnt create bridge without name' do
@@ -138,7 +156,7 @@ RSpec.describe 'Bridges', type: :request do
 
       expect(response).to_not be_successful
     end
-    
+
     it 'updates bridges' do
       subject.save!
 

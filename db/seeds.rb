@@ -4,7 +4,6 @@ end
 
 user = User.create(email: 'admin@bridge.io', password: 'password', notifications: false)
 user2 = User.create(email: 'tester@bridge.io', password: 'password', notifications: false)
-p user.errors
 
 bridge = Bridge.create(
   user: user,
@@ -31,7 +30,7 @@ bridge2 = Bridge.create(
   method: 'PATCH', 
   retries: 0, 
   delay: 0,
-  data: ''
+  data: '{}'
 )
 
 bridge2.environment_variables << EnvironmentVariable.create(key: 'database', value: 'z9992374623')
