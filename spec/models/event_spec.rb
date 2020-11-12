@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require './spec/support/main_helper'
-
-RSpec.configure do |c|
-  c.include MainHelper
-end
 
 RSpec.describe Event, type: :model do
   before do

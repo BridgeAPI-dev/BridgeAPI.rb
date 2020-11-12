@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require './spec/support/main_helper'
-
-RSpec.configure do |c|
-  c.include MainHelper
-end
 
 RSpec.describe Bridge, type: :model do
   before do
@@ -13,47 +8,61 @@ RSpec.describe Bridge, type: :model do
   end
 
   after do
-    @current_user.destroy
+    @current_user.destroy!
   end
 
   subject do
     create_bridge
   end
 
-  it 'has many env vars' do
-    subject.env_vars << EnvironmentVariable.create(
-      key: 'database',
-      value: 'a102345ij2'
-    )
-    subject.env_vars << EnvironmentVariable.create(
-      key: 'database_password',
-      value: 'supersecretpasswordwow'
-    )
-    expect(subject.env_vars.count).to eq 2
+  it 'is valid when passed valid info' do
+    expect(subject).to be_valid
   end
 
-  it 'has many headers' do
-    subject.headers << Header.create(
-      key: 'X_API_KEY',
-      value: 'ooosecrets'
-    )
-    subject.headers << Header.create(
-      key: 'Authentication',
-      value: 'Bearer 1oij2oubviu3498'
-    )
-    expect(subject.headers.count).to eq 2
+  it 'is invalid without a name' do
+    subject.name = nil
+    expect(subject).to_not be_valid
   end
 
-  it 'has many events' do
-    5.times do
-      subject.events << Event.create(
-        completed: false,
-        outbound_url: subject.outbound_url,
-        inbound_url: subject.inbound_url,
-        data: '',
-        status_code: 300
-      )
-    end
-    expect(subject.events.count).to eq 5
+  it 'is invalid without an outbound_url' do
+    subject.outbound_url = nil
+    expect(subject).to_not be_valid
+  end
+
+  it 'is invalid without a method' do
+    subject.method = nil
+    expect(subject).to_not be_valid
+  end
+
+  it 'is invalid without a retries property' do
+    subject.retries = nil
+    expect(subject).to_not be_valid
+  end
+
+  it 'is invalid without a delay' do
+    subject.delay = nil
+    expect(subject).to_not be_valid
+  end
+
+  it 'is invalid without a data property' do
+    subject.data = nil
+    expect(subject).to_not be_valid
+  end
+
+  it 'automatically sets the inbound url when created' do
+    expect(subject.inbound_url).to be_nil
+    expect(subject).to be_valid
+    subject.save!
+    expect(subject.inbound_url).to_not be_nil
+  end
+
+  it 'only sets inbound_url on create' do
+    expect(subject.inbound_url).to be_nil
+    expect(subject).to be_valid
+    subject.save!
+    expect(subject.inbound_url).to_not be_nil
+    url = subject.inbound_url
+    subject.save!
+    expect(url).to eq subject.inbound_url
   end
 end

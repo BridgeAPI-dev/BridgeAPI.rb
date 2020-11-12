@@ -7,18 +7,23 @@ module MainHelper
   end
 
   def authenticated_token
-    { 'HTTP_BRIDGE_JWT': @token }
+    { 'BRIDGE-JWT': @token }
+  end
+
+  def create_other_user
+    @other_user = User.create(email: 'tester@bridge.io', password: 'password', notifications: false)
   end
 
   def create_bridge
-    Bridge.create(
+    Bridge.new(
       user: @current_user,
       name: 'bridge',
       payload: '',
-      outbound_url: "doggoapi.io/#{Bridge.generate_inbound_url}",
+      outbound_url: "doggoapi.io/#{(String(rand).split '.')[1]}",
       method: 'POST',
       retries: 5,
-      delay: 15
+      delay: 15,
+      data: '{}'
     )
   end
 end

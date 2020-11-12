@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_10_220329) do
+ActiveRecord::Schema.define(version: 2020_11_12_094842) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2020_11_10_220329) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
+    t.jsonb "data", null: false
     t.index ["inbound_url"], name: "index_bridges_on_inbound_url", unique: true
     t.index ["user_id"], name: "index_bridges_on_user_id"
   end
@@ -72,4 +73,7 @@ ActiveRecord::Schema.define(version: 2020_11_10_220329) do
   end
 
   add_foreign_key "bridges", "users"
+  add_foreign_key "environment_variables", "bridges"
+  add_foreign_key "events", "bridges"
+  add_foreign_key "headers", "bridges"
 end

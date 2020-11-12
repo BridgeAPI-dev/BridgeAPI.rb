@@ -26,14 +26,14 @@ RETRIES ||= [
 ].freeze
 
 class Bridge < ApplicationRecord
+  before_validation :set_inbound_url, on: :create
   validates :name, presence: true
   validates :inbound_url, presence: true, uniqueness: true
   validates :outbound_url, presence: true
+  validates :data, presence: true
   validates :method, inclusion: METHODS
   validates :delay, inclusion: DELAYS
   validates :retries, inclusion: RETRIES
-
-  before_validation :set_inbound_url, only: :inbound_url
 
   belongs_to :user
   has_many :environment_variables, dependent: :destroy
@@ -41,13 +41,9 @@ class Bridge < ApplicationRecord
   has_many :events, dependent: :destroy
   belongs_to :user
 
-  alias_attribute :env_vars, :environment_variables
-
-  def self.generate_inbound_url
-    SecureRandom.hex(10)
-  end
+  private
 
   def set_inbound_url
-    self.inbound_url = Bridge.generate_inbound_url
+    self.inbound_url = SecureRandom.hex(10)
   end
 end

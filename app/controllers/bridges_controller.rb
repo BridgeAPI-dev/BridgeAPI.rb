@@ -3,6 +3,7 @@
 class BridgesController < ApplicationController
   before_action :authorize_request
   before_action :set_bridge, only: %i[show update destroy]
+  before_action :new_bridge, only: :create
 
   def index
     render_message message: @current_user.bridges.all
@@ -19,7 +20,7 @@ class BridgesController < ApplicationController
     if @bridge.save
       render_message status: :created
     else
-      render_message message: @bridge.errors, status: :internal_server_error
+      render_message message: @bridge.errors, status: :bad_request
     end
   end
 
@@ -27,7 +28,7 @@ class BridgesController < ApplicationController
     if @bridge.update bridge_params
       render_message
     else
-      render_message message: @bridge.errors, status: :internal_server_error
+      render_message message: @bridge.errors, status: :bad_request
     end
   end
 
@@ -39,7 +40,7 @@ class BridgesController < ApplicationController
   protected
 
   def bridge_params
-    params.require(:bridge).permit(:name, :method, :retries, :delay, :outbound_url, :payload)
+    params.require(:bridge).permit(:name, :method, :retries, :delay, :outbound_url, :payload, :data)
   end
 
   def set_bridge

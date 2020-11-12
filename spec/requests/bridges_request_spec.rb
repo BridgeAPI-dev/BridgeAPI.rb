@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
 require 'rails_helper'
-require './spec/support/main_helper'
-
-RSpec.configure do |c|
-  c.include MainHelper
-end
 
 RSpec.describe 'Bridges', type: :request do
   before do
@@ -13,7 +8,7 @@ RSpec.describe 'Bridges', type: :request do
   end
 
   after do
-    @current_user.destroy
+    @current_user.destroy!
   end
 
   subject do
@@ -21,7 +16,7 @@ RSpec.describe 'Bridges', type: :request do
   end
 
   describe 'handles all requests properly:' do
-    it 'index method' do
+    it 'handles index method with valid user' do
       subject.name = 'index method bridge'
       subject.save!
       get bridges_path, headers: authenticated_token
@@ -29,11 +24,44 @@ RSpec.describe 'Bridges', type: :request do
       expect(response.body).to include subject.name
     end
 
-    it 'show method' do
+    it 'doesn\'t returns another user\'s bridge using index' do
+      subject.name = 'index method bridge'
+      subject.save!
+
+      create_other_user
+      other_bridge = create_bridge
+      other_bridge.name = 'other\s bridge'
+      other_bridge.user = @other_user
+      other_bridge.save!
+
+      get bridges_path, headers: authenticated_token
+
+      expect(response).to be_successful
+      expect(response.body).to_not include other_bridge.name
+      expect(response.body).to include subject.name
+
+      @other_user.destroy!
+    end
+
+    it 'handles the show method successfully' do
       subject.name = 'show method bridge'
       subject.save!
       get bridge_path(subject.id), headers: authenticated_token
       expect(response.body).to include 'show method bridge'
+    end
+
+    it 'doesn\'t returns another user\'s bridge using show' do
+      create_other_user
+      other_bridge = create_bridge
+      other_bridge.name = 'other\s bridge'
+      other_bridge.user = @other_user
+      other_bridge.save!
+
+      get bridge_path(other_bridge.id), headers: authenticated_token
+
+      expect(response).to_not be_successful
+
+      @other_user.destroy!
     end
   end
 end
