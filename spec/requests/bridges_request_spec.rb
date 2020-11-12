@@ -112,7 +112,7 @@ RSpec.describe 'Bridges', type: :request do
       invalid_hash = bridge_hash
       invalid_hash[:name] = nil
 
-      post bridges_path, params: { bridge: invalid_hash }
+      post bridges_path, params: { bridge: invalid_hash }, headers: authenticated_token
 
       expect(response).to_not be_successful
     end
@@ -120,7 +120,7 @@ RSpec.describe 'Bridges', type: :request do
       invalid_hash = bridge_hash
       invalid_hash[:outbound_url] = nil
 
-      post bridges_path, params: { bridge: invalid_hash }
+      post bridges_path, params: { bridge: invalid_hash }, headers: authenticated_token
 
       expect(response).to_not be_successful
     end
@@ -128,7 +128,7 @@ RSpec.describe 'Bridges', type: :request do
       invalid_hash = bridge_hash
       invalid_hash[:data] = nil
 
-      post bridges_path, params: { bridge: invalid_hash }
+      post bridges_path, params: { bridge: invalid_hash }, headers: authenticated_token
 
       expect(response).to_not be_successful
     end
@@ -136,7 +136,7 @@ RSpec.describe 'Bridges', type: :request do
       invalid_hash = bridge_hash
       invalid_hash[:method] = nil
 
-      post bridges_path, params: { bridge: invalid_hash }
+      post bridges_path, params: { bridge: invalid_hash }, headers: authenticated_token
 
       expect(response).to_not be_successful
     end
@@ -144,7 +144,7 @@ RSpec.describe 'Bridges', type: :request do
       invalid_hash = bridge_hash
       invalid_hash[:delay] = nil
 
-      post bridges_path, params: { bridge: invalid_hash }
+      post bridges_path, params: { bridge: invalid_hash }, headers: authenticated_token
 
       expect(response).to_not be_successful
     end
@@ -152,7 +152,7 @@ RSpec.describe 'Bridges', type: :request do
       invalid_hash = bridge_hash
       invalid_hash[:retries] = nil
 
-      post bridges_path, params: { bridge: invalid_hash }
+      post bridges_path, params: { bridge: invalid_hash }, headers: authenticated_token
 
       expect(response).to_not be_successful
     end
