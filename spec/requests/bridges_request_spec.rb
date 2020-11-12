@@ -24,7 +24,7 @@ RSpec.describe 'Bridges', type: :request do
       expect(response.body).to include subject.name
     end
 
-    it 'doesn\'t returns another user\'s bridge using index' do
+    it 'doesn\'t return another user\'s bridge using index' do
       subject.name = 'index method bridge'
       subject.save!
 
@@ -50,7 +50,7 @@ RSpec.describe 'Bridges', type: :request do
       expect(response.body).to include 'show method bridge'
     end
 
-    it 'doesn\'t returns another user\'s bridge using show' do
+    it 'doesn\'t return another user\'s bridge using show' do
       create_other_user
       other_bridge = create_bridge
       other_bridge.name = 'other\s bridge'
