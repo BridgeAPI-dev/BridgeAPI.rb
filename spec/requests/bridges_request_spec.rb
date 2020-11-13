@@ -124,13 +124,13 @@ RSpec.describe 'Bridges', type: :request do
 
       expect(response).to_not be_successful
     end
-    it 'doesnt create bridge without data' do
+    it 'creates bridge without data' do
       invalid_hash = bridge_hash
       invalid_hash[:data] = nil
 
       post bridges_path, params: { bridge: invalid_hash }, headers: authenticated_token
 
-      expect(response).to_not be_successful
+      expect(response).to be_successful
     end
     it 'doesnt create bridge without method' do
       invalid_hash = bridge_hash

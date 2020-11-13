@@ -44,8 +44,23 @@ RSpec.describe Bridge, type: :model do
     expect(subject).to_not be_valid
   end
 
-  it 'is invalid without a data property' do
+  it 'is valid without a data property' do
     subject.data = nil
+    expect(subject).to be_valid
+  end
+
+  it 'is not valid when data has more than two keys' do
+    subject.data["test"] = 1
+    expect(subject).to_not be_valid
+  end
+
+  it 'is not valid when payload is not a hash' do
+    subject.data["payload"] = 1
+    expect(subject).to_not be_valid
+  end
+
+  it 'is not valid when test payload is not a hash' do
+    subject.data["test_payload"] = 1
     expect(subject).to_not be_valid
   end
 

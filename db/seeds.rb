@@ -30,7 +30,7 @@ bridge2 = Bridge.create(
   method: 'PATCH', 
   retries: 0, 
   delay: 0,
-  data: '{}'
+  data: { payload: {}, testPayload: {}}
 )
 
 bridge2.environment_variables << EnvironmentVariable.create(key: 'database', value: 'z9992374623')
