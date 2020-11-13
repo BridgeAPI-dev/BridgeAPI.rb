@@ -22,11 +22,10 @@ ActiveRecord::Schema.define(version: 2020_11_12_094842) do
     t.string "method", null: false
     t.integer "retries", null: false
     t.integer "delay", null: false
-    t.jsonb "payload", null: false
+    t.jsonb "data", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "user_id", null: false
-    t.jsonb "data", null: false
     t.index ["inbound_url"], name: "index_bridges_on_inbound_url", unique: true
     t.index ["user_id"], name: "index_bridges_on_user_id"
   end

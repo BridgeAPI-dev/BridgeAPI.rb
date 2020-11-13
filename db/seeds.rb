@@ -8,12 +8,11 @@ user2 = User.create(email: 'tester@bridge.io', password: 'password', notificatio
 bridge = Bridge.create(
   user: user,
   title: 'My First Bridge', 
-  payload: '',  
   outbound_url: test_url, 
   method: 'POST', 
   retries: 5, 
   delay: 15,
-  data: '{}'
+  data: { payload: {}, test_payload: {}}
 )
 
 
@@ -25,12 +24,11 @@ bridge.headers << Header.create(key: 'Authentication', value: 'Bearer &&&&&&&&&&
 bridge2 = Bridge.create(
   user: user2,
   title: 'My Second Bridge', 
-  payload: '',  
   outbound_url: test_url, 
   method: 'PATCH', 
   retries: 0, 
   delay: 0,
-  data: { payload: {}, testPayload: {}}
+  data: { payload: {}, test_payload: {}}
 )
 
 bridge2.environment_variables << EnvironmentVariable.create(key: 'database', value: 'z9992374623')
