@@ -53,9 +53,9 @@ class Bridge < ApplicationRecord
               JSON.parse(data['test_payload']).instance_of?(Hash) &&
               data.keys.count == 2
 
-    errors.add(:data, 'must only contain a payload and a test_payload keys and each must json parsable')
+    errors.add(:data, 'must only contain payload and test_payload keys')
   rescue TypeError
-    errors.add(:data, 'must only contain a payload and a test_payload keys and each must json parsable')
+    errors.add(:data, 'keys must be json parsable')
   end
 
   def set_inbound_url
