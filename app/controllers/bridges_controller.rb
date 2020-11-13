@@ -5,16 +5,16 @@ class BridgesController < ApplicationController
   before_action :set_bridge, only: %i[show update destroy]
 
   def index
-    render_message message: @current_user.bridges.all
+    render_message message: { bridges: @current_user.bridges.all }
   end
 
   def show
-    render_message message: @bridge.to_json(include: %i[headers environment_variables events])
+    render json: { bridge: @bridge }, include: %i[headers environment_variables events], status: :ok
   end
 
   def create
     @bridge = Bridge.new(bridge_params)
-    @bridge.populate_data(@current_user, params[:test_payload], params[:payload])
+    @bridge.user = @current_user
 
     if @bridge.save
       render_message message: { id: @bridge.id }, status: :created
@@ -47,9 +47,9 @@ class BridgesController < ApplicationController
       :delay,
       :outbound_url,
       :payload,
-      :data,
-      headers_attributes: %i[key value],
-      environment_variables_attributes: %i[key value]
+      data: %i[payload test_payload],
+      headers_attributes: %i[id key value],
+      environment_variables_attributes: %i[id key value]
     )
   end
   # rubocop:enable Metrics/MethodLength

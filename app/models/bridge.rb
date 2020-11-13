@@ -34,7 +34,7 @@ class Bridge < ApplicationRecord
   validates :method, inclusion: METHODS
   validates :delay, inclusion: DELAYS
   validates :retries, inclusion: RETRIES
-  validate :payloads_are_valid
+  validate :validate_payloads
 
   belongs_to :user
   has_many :environment_variables, dependent: :destroy
@@ -42,21 +42,20 @@ class Bridge < ApplicationRecord
   has_many :events, dependent: :destroy
   accepts_nested_attributes_for :headers, :environment_variables
 
-  def set_payloads
-    self.data = { payload: {}, test_payload: {} } if data.nil?
-  end
-
-  def populate_data(user, payload, test_payload)
-    self.user = user
-    self.data = { payload: payload, test_payload: test_payload } if payload && test_payload
-  end
-
   private
 
-  def payloads_are_valid
-    return if data['payload'].instance_of?(Hash) && data['test_payload'].instance_of?(Hash) && data.keys.count == 2
+  def set_payloads
+    self.data = { payload: '{}', test_payload: '{}' } if data.nil?
+  end
 
-    errors.add(:data, 'must only contain a payload and a test payload and each must be a hash')
+  def validate_payloads
+    return if JSON.parse(data['payload']).instance_of?(Hash) &&
+              JSON.parse(data['test_payload']).instance_of?(Hash) &&
+              data.keys.count == 2
+
+    errors.add(:data, 'must only contain a payload and a test_payload keys and each must json parsable')
+  rescue TypeError
+    errors.add(:data, 'must only contain a payload and a test_payload keys and each must json parsable')
   end
 
   def set_inbound_url

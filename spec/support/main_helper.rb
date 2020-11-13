@@ -22,7 +22,7 @@ module MainHelper
       method: 'POST',
       retries: 5,
       delay: 15,
-      data: { payload: {}, test_payload: {} }
+      data: { payload: '{}', test_payload: '{}' }
     }
   end
 
