@@ -38,6 +38,7 @@ class BridgesController < ApplicationController
 
   protected
 
+  # rubocop:disable Metrics/MethodLength
   def bridge_params
     params.require(:bridge).permit(
       :title,
@@ -51,6 +52,7 @@ class BridgesController < ApplicationController
       environment_variables_attributes: %i[key value]
     )
   end
+  # rubocop:enable Metrics/MethodLength
 
   def set_bridge
     @bridge = Bridge.includes(:events, :headers, :environment_variables).find_by(id: params[:id], user: @current_user)
