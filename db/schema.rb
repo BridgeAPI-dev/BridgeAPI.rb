@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(version: 2020_11_12_094842) do
   enable_extension "plpgsql"
 
   create_table "bridges", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "title", null: false
     t.string "inbound_url", null: false
     t.string "outbound_url", null: false
     t.string "method", null: false

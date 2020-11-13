@@ -19,8 +19,8 @@ RSpec.describe Bridge, type: :model do
     expect(subject).to be_valid
   end
 
-  it 'is invalid without a name' do
-    subject.name = nil
+  it 'is invalid without a title' do
+    subject.title = nil
     expect(subject).to_not be_valid
   end
 

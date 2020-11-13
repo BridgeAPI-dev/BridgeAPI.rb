@@ -7,7 +7,7 @@ user2 = User.create(email: 'tester@bridge.io', password: 'password', notificatio
 
 bridge = Bridge.create(
   user: user,
-  name: 'My First Bridge', 
+  title: 'My First Bridge', 
   payload: '',  
   outbound_url: test_url, 
   method: 'POST', 
@@ -24,7 +24,7 @@ bridge.headers << Header.create(key: 'Authentication', value: 'Bearer &&&&&&&&&&
 
 bridge2 = Bridge.create(
   user: user2,
-  name: 'My Second Bridge', 
+  title: 'My Second Bridge', 
   payload: '',  
   outbound_url: test_url, 
   method: 'PATCH', 

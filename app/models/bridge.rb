@@ -28,7 +28,7 @@ RETRIES ||= [
 class Bridge < ApplicationRecord
   before_validation :set_inbound_url, on: :create
   before_validation :set_payloads, on: :create
-  validates :name, presence: true
+  validates :title, presence: true
   validates :inbound_url, presence: true, uniqueness: true
   validates :outbound_url, presence: true
   validates :method, inclusion: METHODS

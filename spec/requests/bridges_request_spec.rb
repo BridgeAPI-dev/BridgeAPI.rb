@@ -17,34 +17,34 @@ RSpec.describe 'Bridges', type: :request do
 
   describe 'handles all requests properly:' do
     it 'handles index method with valid user' do
-      subject.name = 'index method bridge'
+      subject.title = 'index method bridge'
       subject.save!
       get bridges_path, headers: authenticated_token
       expect(response).to be_successful
-      expect(response.body).to include subject.name
+      expect(response.body).to include subject.title
     end
 
     it 'doesn\'t return another user\'s bridge using index' do
-      subject.name = 'index method bridge'
+      subject.title = 'index method bridge'
       subject.save!
 
       create_other_user
       other_bridge = create_bridge
-      other_bridge.name = 'other\s bridge'
+      other_bridge.title = 'other\s bridge'
       other_bridge.user = @other_user
       other_bridge.save!
 
       get bridges_path, headers: authenticated_token
 
       expect(response).to be_successful
-      expect(response.body).to_not include other_bridge.name
-      expect(response.body).to include subject.name
+      expect(response.body).to_not include other_bridge.title
+      expect(response.body).to include subject.title
 
       @other_user.destroy!
     end
 
     it 'handles the show method successfully' do
-      subject.name = 'show method bridge'
+      subject.title = 'show method bridge'
       subject.save!
       get bridge_path(subject.id), headers: authenticated_token
       expect(response.body).to include 'show method bridge'
@@ -53,7 +53,7 @@ RSpec.describe 'Bridges', type: :request do
     it 'doesn\'t return another user\'s bridge using show' do
       create_other_user
       other_bridge = create_bridge
-      other_bridge.name = 'other\s bridge'
+      other_bridge.title = 'other\s bridge'
       other_bridge.user = @other_user
       other_bridge.save!
 
@@ -75,7 +75,7 @@ RSpec.describe 'Bridges', type: :request do
     it 'doesnt destroy other\'s bridges' do
       create_other_user
       other_bridge = create_bridge
-      other_bridge.name = 'other\s bridge'
+      other_bridge.title = 'other\s bridge'
       other_bridge.user = @other_user
       other_bridge.save!
 
@@ -108,9 +108,9 @@ RSpec.describe 'Bridges', type: :request do
       expect(bridge.environment_variables.count).to be 1
     end
 
-    it 'doesnt create bridge without name' do
+    it 'doesnt create bridge without title' do
       invalid_hash = bridge_hash
-      invalid_hash[:name] = nil
+      invalid_hash[:title] = nil
 
       post bridges_path, params: { bridge: invalid_hash }, headers: authenticated_token
 
@@ -160,7 +160,7 @@ RSpec.describe 'Bridges', type: :request do
     it 'updates bridges' do
       subject.save!
 
-      patch bridge_path(subject.id), params: { bridge: { name: 'updated bridge ' } }, headers: authenticated_token
+      patch bridge_path(subject.id), params: { bridge: { title: 'updated bridge ' } }, headers: authenticated_token
 
       expect(response).to be_successful
     end
@@ -168,11 +168,11 @@ RSpec.describe 'Bridges', type: :request do
     it 'doesnt update other\'s bridges' do
       create_other_user
       other_bridge = create_bridge
-      other_bridge.name = 'other\s bridge'
+      other_bridge.title = 'other\s bridge'
       other_bridge.user = @other_user
       other_bridge.save!
 
-      patch bridge_path(other_bridge.id), params: { bridge: { name: 'updated bridge ' } }, headers: authenticated_token
+      patch bridge_path(other_bridge.id), params: { bridge: { title: 'updated bridge ' } }, headers: authenticated_token
 
       expect(response).to_not be_successful
     end

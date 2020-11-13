@@ -17,7 +17,7 @@ module MainHelper
   def bridge_hash
     {
       user: @current_user,
-      name: 'bridge',
+      title: 'bridge',
       payload: '',
       outbound_url: "doggoapi.io/#{(String(rand).split '.')[1]}",
       method: 'POST',

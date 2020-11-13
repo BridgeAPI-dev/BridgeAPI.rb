@@ -40,7 +40,7 @@ class BridgesController < ApplicationController
 
   def bridge_params
     params.require(:bridge).permit(
-      :name,
+      :title,
       :method,
       :retries,
       :delay,
