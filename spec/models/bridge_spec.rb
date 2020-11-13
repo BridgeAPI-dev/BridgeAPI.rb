@@ -50,17 +50,17 @@ RSpec.describe Bridge, type: :model do
   end
 
   it 'is not valid when data has more than two keys' do
-    subject.data["test"] = 1
+    subject.data['test'] = 1
     expect(subject).to_not be_valid
   end
 
   it 'is not valid when payload is not a hash' do
-    subject.data["payload"] = 1
+    subject.data['payload'] = 1
     expect(subject).to_not be_valid
   end
 
   it 'is not valid when test payload is not a hash' do
-    subject.data["test_payload"] = 1
+    subject.data['test_payload'] = 1
     expect(subject).to_not be_valid
   end
 

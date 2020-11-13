@@ -54,7 +54,7 @@ class Bridge < ApplicationRecord
   private
 
   def payloads_are_valid
-    return if data['payload'].instance_of?(Hash) && data['test_payload'].instance_of?(Hash) && self.data.keys.count == 2
+    return if data['payload'].instance_of?(Hash) && data['test_payload'].instance_of?(Hash) && data.keys.count == 2
 
     errors.add(:data, 'must only contain a payload and a test payload and each must be a hash')
   end
