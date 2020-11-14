@@ -6,27 +6,27 @@ class EnvironmentVariable < ApplicationRecord
 
   belongs_to :bridge
 
-  before_save :encrypt, if: Proc.new { |c| c.value_changed? }
+  before_save :encrypt, if: proc { |c| c.value_changed? }
 
   delegate :encrypt_and_sign, :decrypt_and_verify, to: :encryptor
-  
+
   KEY = ActiveSupport::KeyGenerator.new(
-    ENV.fetch("SECRET_KEY_BASE")
+    ENV.fetch('SECRET_KEY_BASE')
   ).generate_key(
-    ENV.fetch("ENCRYPTION_SERVICE_SALT"),
+    ENV.fetch('ENCRYPTION_SERVICE_SALT'),
     ActiveSupport::MessageEncryptor.key_len
   ).freeze
-  
+
   private_constant :KEY
-  
+
   def decrypt
-    decrypt_and_verify(self.value)
+    decrypt_and_verify(value)
   end
 
   private
-  
+
   def encrypt
-    self.value = encrypt_and_sign(self.value)
+    self.value = encrypt_and_sign(value)
   end
 
   def encryptor
