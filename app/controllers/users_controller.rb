@@ -14,8 +14,6 @@ class UsersController < ApplicationController
     render json: { user: user.safe_json, token: token }, status: 201 # Created
   rescue ActiveRecord::RecordInvalid
     render json: { error: 'email or password is invalid' }, status: 422 # Unprocessable Entity
-  rescue JWT::EncodeError
-    render json: {}, status: 422 # Unprocessable Entity
   end
 
   def destroy
