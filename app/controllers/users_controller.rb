@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   before_action :authorize_request, only: %i[show destroy update]
 
   def show
-    render json: @current_user.safe_json, status: 200
+    render json: { user: @current_user.safe_json }, status: 200
   end
 
   def create
@@ -33,6 +33,6 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :notifications)
+    params.require(:user).permit(:email, :password, :new_password, :password_confirmation, :notifications)
   end
 end
