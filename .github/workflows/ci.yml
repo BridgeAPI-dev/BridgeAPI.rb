@@ -9,9 +9,9 @@ name: Build
 on:
   pull_request:
     branches:
-      - 'master'
+      - "master"
   schedule:
-    - cron: '0 21 * * *'
+    - cron: "0 21 * * *"
 
 jobs:
   rubocop-test:
@@ -37,8 +37,9 @@ jobs:
           POSTGRES_USER: ${{ env.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ env.POSTGRES_DB }}
+          ENCRYPTION_SERVICE_SALT: e4l\xB7\x98p\xE3\x97\xE4H[\xE8\x8A\xFF\xC5\x11\xF8\xB7\x05\x95Oj\x9CS\x8A\x8A\fF\x90:\xE0\xFB
         ports:
-        - 5432:5432
+          - 5432:5432
         # needed because the postgres container does not provide a healthcheck
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
@@ -63,7 +64,7 @@ jobs:
           bundler exec rails db:migrate RAILS_ENV=test
       - name: Run tests
         run: bundle exec rspec
-      # - name: Upload coverage results    
+      # - name: Upload coverage results
       #   uses: actions/upload-artifact@master
       #   if: always()
       #   with:
