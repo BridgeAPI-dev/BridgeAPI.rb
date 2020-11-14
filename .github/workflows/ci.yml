@@ -3,6 +3,7 @@ env:
   POSTGRES_USER: ruby
   POSTGRES_PASSWORD: ruby
   POSTGRES_DB: bridgeapi_rb_test
+  ENCRYPTION_SERVICE_SALT: e4l\xB7\x98p\xE3\x97\xE4H[\xE8\x8A\xFF\xC5\x11\xF8\xB7\x05\x95Oj\x9CS\x8A\x8A\fF\x90:\xE0\xFB
 
 name: Build
 
