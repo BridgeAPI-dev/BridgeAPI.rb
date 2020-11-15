@@ -21,7 +21,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    return if params[:password] && !update_password
+    return if user_params[:password] && !update_password
 
     if @current_user.update(user_params)
       render json: @current_user.safe_json, status: 200 # OK
@@ -38,7 +38,7 @@ class UsersController < ApplicationController
 
   def update_password
     if @current_user.authenticate(params[:current_password])
-      @current_user.password = params[:password]
+      @current_user.password = user_params[:password]
     else
       render json: { error: 'password is incorrect' }, status: 400 # Bad Request
       nil
