@@ -11,6 +11,10 @@ RSpec.describe EnvironmentVariable, type: :model do
     create_bridge
   end
 
+  after do
+    subject.destroy!
+  end
+
   it 'belongs to bridge' do
     environment_variable1 = EnvironmentVariable.new(key: 'database', value: 'a102345ij2', bridge: subject)
     environment_variable2 = EnvironmentVariable.new(
