@@ -4,7 +4,7 @@ class NoEcryptionKey < StandardError
 end
 
 # The ENCRYPTION_KEY_SALT environment variable is hard coded for test and dev environments
-# but expected to be set in production 
+# but expected to be set in production
 
 if Rails.env == 'test' || Rails.env == 'development'
   # rubocop:disable Layout/LineLength
