@@ -13,7 +13,7 @@ class EnvironmentVariable < ApplicationRecord
   KEY = ActiveSupport::KeyGenerator.new(
     Rails.application.secrets.secret_key_base
   ).generate_key(
-    ENV.fetch('ENCRYPTION_SERVICE_SALT'),
+    ENV.fetch('SALT'),
     ActiveSupport::MessageEncryptor.key_len
   ).freeze
 
