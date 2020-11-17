@@ -32,7 +32,7 @@ RSpec.describe 'EnvironmentVariables', type: :request do
       other_bridge.user = @other_user
       other_bridge.save!
       environment_variable = EnvironmentVariable.create(
-        key: 'other\'s header',
+        key: 'other\'s environment variable',
         value: 'a9393939393',
         bridge: other_bridge
       )
