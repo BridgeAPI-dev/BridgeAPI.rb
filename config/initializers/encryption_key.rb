@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class NoEcryptionKey < StandardError
+class NoEncryptionKey < StandardError
 end
 
 # The ENCRYPTION_KEY_SALT environment variable is hard coded for test and dev environments
