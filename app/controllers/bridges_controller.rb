@@ -45,6 +45,7 @@ class BridgesController < ApplicationController
   # rubocop:disable Metrics/MethodLength
   def bridge_params
     params.require(:bridge).permit(
+      :active,
       :title,
       :method,
       :retries,
