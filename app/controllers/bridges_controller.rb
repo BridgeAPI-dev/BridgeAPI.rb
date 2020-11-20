@@ -5,7 +5,9 @@ class BridgesController < ApplicationController
   before_action :set_bridge, only: %i[show update destroy]
 
   def index
-    render_message message: { bridges: @current_user.bridges.all }
+    @bridges = @current_user.bridges.all.map(&:add_event_info)
+
+    render_message message: { bridges: @bridges }
   end
 
   def show

@@ -42,6 +42,12 @@ class Bridge < ApplicationRecord
   has_many :events, dependent: :destroy
   accepts_nested_attributes_for :headers, :environment_variables
 
+  def add_event_info
+    event_count = events.count
+    latest_completion = events.filter(&:completed_at).min { |a, b| b.completed_at <=> a.completed_at }[:completed_at]
+    attributes.merge({ 'eventCount' => event_count, 'latestCompletion' => latest_completion })
+  end
+
   private
 
   def set_payloads
