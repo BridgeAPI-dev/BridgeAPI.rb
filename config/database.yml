@@ -83,7 +83,11 @@ test:
 #     url: <%= ENV['DATABASE_URL'] %>
 #
 production:
-  <<: *default
+  adapter: postgresql
+  encoding: unicode
   database: bridgeapi_rb_production
-  username: bridgeapi_rb
-  password: <%= ENV['BRIDGEAPI_RB_DATABASE_PASSWORD'] %>
+  username: bridgeapi_pg
+  password: 77GWsHkIy499tWBAZGgNVVa9
+  host: database-1.ckn0jlcfjul4.us-east-2.rds.amazonaws.com
+  port: 5432
+  pool: 5
