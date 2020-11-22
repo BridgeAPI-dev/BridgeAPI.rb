@@ -2,7 +2,7 @@
 
 class BridgesController < ApplicationController
   before_action :authorize_request
-  before_action :set_bridge, only: %i[show update destroy]
+  before_action :set_bridge, except: %i[index create]
 
   def index
     @bridges = @current_user.bridges.all.map(&:add_event_info)
@@ -11,7 +11,11 @@ class BridgesController < ApplicationController
   end
 
   def show
-    render json: { bridge: @bridge }, include: %i[headers environment_variables events], status: :ok
+    render(
+      json: { bridge: @bridge },
+      include: { headers: {}, environment_variables: { except: :value }, events: {} },
+      status: :ok
+    )
   end
 
   def create
@@ -38,11 +42,28 @@ class BridgesController < ApplicationController
     render_message
   end
 
+  def activate
+    if @bridge.update active: true
+      render_message
+    else
+      render_message status: :bad_request
+    end
+  end
+
+  def deactivate
+    if @bridge.update active: false
+      render_message
+    else
+      render_message status: :bad_request
+    end
+  end
+
   protected
 
   # rubocop:disable Metrics/MethodLength
   def bridge_params
     params.require(:bridge).permit(
+      :active,
       :title,
       :method,
       :retries,
@@ -57,7 +78,11 @@ class BridgesController < ApplicationController
   # rubocop:enable Metrics/MethodLength
 
   def set_bridge
-    @bridge = Bridge.includes(:events, :headers, :environment_variables).find_by(id: params[:id], user: @current_user)
+    @bridge = Bridge.includes(
+      :events,
+      :headers,
+      :environment_variables
+    ).find_by(id: (params[:id] || params[:bridge_id]), user_id: @current_user.id)
     render_message status: :unprocessable_entity unless @bridge
   end
 end
