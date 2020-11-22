@@ -44,7 +44,7 @@ class Bridge < ApplicationRecord
 
   def add_event_info
     completed_at = events.filter(&:completed_at).min { |a, b| b.completed_at <=> a.completed_at }[:completed_at]
-    attributes.merge({ 'eventCount' => events.count, 'completedAt' => latest_completion })
+    attributes.merge({ 'eventCount' => events.count, 'completedAt' => completed_at })
   end
 
   private
