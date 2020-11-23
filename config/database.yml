@@ -85,9 +85,9 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: bridgeapi_rb_production
-  username: bridgeapi_pg
-  password: 77GWsHkIy499tWBAZGgNVVa9
-  host: database-1.ckn0jlcfjul4.us-east-2.rds.amazonaws.com
+  database: ENV['RDS_DATABASE']
+  username: ENV['RDS_USERNAME']
+  password: ENV['RDS_PASSWORD']
+  host: ENV['RDS_HOST']
   port: 5432
   pool: 5
