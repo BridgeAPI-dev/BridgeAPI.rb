@@ -29,7 +29,7 @@ class EventsController < ApplicationController
   def create
     event = create_event(find_bridge)
     if event.save
-      EventWorker.perform_async(event.id)
+      # EventWorker.perform_async(event.id)
       render json: {}, status: 202 # Accepted
     else
       render json: { error: 'Invalid parameters' }, status: 400 # Bad Request
