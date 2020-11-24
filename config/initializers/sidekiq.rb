@@ -12,9 +12,13 @@ Sidekiq.configure_server do |config|
     chain.add SidekiqMiddleware
   end
 
-  config.redis = { url: 'bridgeapi-sidekiq.zocofw.0001.use2.cache.amazonaws.com:6379/0' } if Rails.env == 'production'
+  if Rails.env == 'production'
+    config.redis = { url: 'redis://bridgeapi-sidekiq.zocofw.0001.use2.cache.amazonaws.com:6379/0' }
+  end
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { url: 'bridgeapi-sidekiq.zocofw.0001.use2.cache.amazonaws.com:6379/0' } if Rails.env == 'production'
+  if Rails.env == 'production'
+    config.redis = { url: 'redis://bridgeapi-sidekiq.zocofw.0001.use2.cache.amazonaws.com:6379/0' }
+  end
 end
