@@ -21,6 +21,7 @@ class BridgesController < ApplicationController
   def create
     @bridge = Bridge.new(bridge_params)
     @bridge.user = @current_user
+    binding.pry
 
     if @bridge.save
       render_message message: { id: @bridge.id }, status: :created
