@@ -19,7 +19,11 @@ class EventWorker
     # recieve a response and it was saved properly.
     request_handler.cleanup(e) unless e.instance_of? Sidekiq::LargeStatusCode
 
-    return event.complete! if retry_count&.>= bridge.retries # TODO: Off by one?
+    if retry_count&.>= @event.bridge.retries
+      return event.complete! # TODO: Off by one?
+    else
+      event.save
+    end
 
     # TODO: We need filter error messages. ArgumentError and our stuff can be ignored but
     # should we really tell users "StandardError" if their service replied with 404?
