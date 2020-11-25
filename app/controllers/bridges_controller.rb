@@ -6,6 +6,7 @@ class BridgesController < ApplicationController
 
   def index
     @bridges = @current_user.bridges.all.map(&:add_event_info)
+
     render_message message: { bridges: @bridges }
   end
 
