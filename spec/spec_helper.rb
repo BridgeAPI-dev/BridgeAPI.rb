@@ -97,3 +97,6 @@ RSpec.configure do |config|
   # TODO: Maybe
   # config.use_transactional_fixtures = true
 end
+
+require 'simplecov'
+SimpleCov.start
