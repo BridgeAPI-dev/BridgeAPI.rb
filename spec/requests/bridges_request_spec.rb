@@ -189,21 +189,21 @@ RSpec.describe 'BridgesController', type: :request do
   it 'doesnt update bridge without method' do
     bridge.save!
 
-    patch bridges_path, params: { bridge: { method: '' } }, headers: authenticated_token
+    patch bridge_path(bridge.id), params: { bridge: { http_method: '' } }, headers: authenticated_token
 
     expect(response).to_not be_successful
   end
   it 'doesnt update bridge without delay' do
     bridge.save!
 
-    patch bridges_path, params: { bridge: { delay: '' } }, headers: authenticated_token
+    patch bridge_path(bridge.id), params: { bridge: { delay: '' } }, headers: authenticated_token
 
     expect(response).to_not be_successful
   end
   it 'doesnt update bridge without retries' do
     bridge.save!
 
-    patch bridges_path, params: { bridge: { retries: '' } }, headers: authenticated_token
+    patch bridge_path(bridge.id), params: { bridge: { retries: '' } }, headers: authenticated_token
 
     expect(response).to_not be_successful
   end
